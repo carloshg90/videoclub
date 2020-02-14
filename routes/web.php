@@ -79,6 +79,9 @@ Route::put('catalog/edit/{id}', 'CatalogController@putEdit')->middleware('auth')
 Route::put('/catalog/rent/{id}','CatalogController@putRent')->middleware('auth');
 Route::put('/catalog/return/{id}','CatalogController@putReturn')->middleware('auth');
 Route::delete('/catalog/delete/{id}','CatalogController@deleteMovie')->middleware('auth');
+Route::post('/catalog/coment/{id}','CatalogController@crearComentari')->middleware('auth');
+Route::resource('/category','CategoryController')->middleware('auth');
+Route::get('/catalog','CatalogController@buscar')->middleware('auth');
 Auth::routes();
 
 

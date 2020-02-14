@@ -21,6 +21,8 @@ class CreateMoviesTable extends Migration
             $table->string('poster');
             $table->boolean('rented')->default(false);
             $table->text('sinopsis');
+            $table->string('trailer');
+            $table->integer('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

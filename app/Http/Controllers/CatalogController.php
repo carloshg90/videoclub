@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Movie;
+use App\Review;
+use Illuminate\Support\Facades\Auth;
 use Coderatio\Laranotify\Facades\Notify;
 
 use Illuminate\Http\Request;
@@ -9,14 +11,13 @@ use Illuminate\Http\Request;
 class CatalogController extends Controller
 {
 
-
     public function getIndex()
     {
         return view('catalog.index',array('arrayPeliculas'=>Movie::all()));
     }
     public function getShow($id)
     {
-        return view('catalog.show', array('arrayPeliculas'=>Movie::findOrFail($id)));
+        return view('catalog.show', array('arrayPeliculas'=>Movie::findOrFail($id),'arrayReviews'=>$results=Review::where('movie_id', $id)->orderBy('created_at', 'desc')->paginate(3)));
     }
     public function getCreate()
     {
@@ -34,7 +35,9 @@ class CatalogController extends Controller
         $movie->year = request('year');
         $movie->director = request('director');
         $movie->poster = request('poster');
-        $movie->synopsis = request('synopsis');
+        $movie->sinopsis = request('synopsis');
+        $movie->trailer = request('trailer');
+        $movie->category_id = request('categoria');
         //Guardem la pelicula i redirigim
         $movie->save();
         Notify::success('Ha guardat la pelicula');
@@ -48,7 +51,9 @@ class CatalogController extends Controller
 		$movie->year = $request->input('year');
 		$movie->director = $request->input('director');
 		$movie->poster = $request->input('poster');
-		$movie->synopsis = $request->input('synopsis');
+        $movie->sinopsis = $request->input('synopsis');
+        $movie->trailer = $request->input('trailer');
+        $movie->category_id = request('categoria');
 		$movie->save();
         Notify::success('Ha modificat la pelicula');
         return redirect('/catalog/show/'.$id);
@@ -72,8 +77,29 @@ class CatalogController extends Controller
     public function deleteMovie($id){
         $movie = new Movie();
         $movie = Movie::findOrFail($id);
-        $movie->delete();  
+        $movie->delete();
         Notify::success('Ha eliminat la pelicula');
         return redirect('/catalog');
     }
+    public function crearComentari(Request $request, $id){
+        //Declarem review
+        $review = new Review();
+        //Guardem les dades a la review
+        $review->title = request('titol');
+        $review->review = request('comentari');
+        $review->stars = request('estrelles');
+        $review->movie_id = $id;
+        $review->user_id = Auth::id();
+        //Guardem la review i redirigim
+        $review->save();
+        Notify::success('Ha publicat el comentari');
+        return redirect('/catalog/show/'.$id);
+    }
+    public function buscar(Request $request){
+        $paraules = $request->input('buscador');
+        $arrayPeliculas = Movie::where('title', 'LIKE', '%' . $paraules . '%')->orWhere('director', 'LIKE', '%' . $paraules . '%')->get();
+        return view('catalog.index', compact('arrayPeliculas'));
+      }
+
+
 }
