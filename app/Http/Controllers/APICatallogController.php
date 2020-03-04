@@ -14,7 +14,7 @@ class APICatallogController extends Controller
 
     //Funcio per crear un pelicula
     public function store(Request $request)
-    {   
+    {
         //---------------------------------------------------//
         //Per fer-ho camp per camp ho farem de la seguent manera,
         //hem de tenir en compte que no ens podem
@@ -24,11 +24,14 @@ class APICatallogController extends Controller
         //Comporvem si existeixen els camps a la base de dades
         if($request->has('title') && $request->has('year') && $request->has('director') && $request->has('poster') && $request->has('synopsis')){
             //Si existeixen guardem les dades a la pelicula
-            $movie->title = $request->title;
-            $movie->year = $request->year;
-            $movie->director = $request->director;
-            $movie->poster = $request->poster;
-            $movie->synopsis = $request->synopsis;
+            $movie->title = $request->input('title');
+            $movie->year = $request->input('year');
+            $movie->director = $request->input('director');
+            $movie->poster = $request->input('poster');
+            $movie->sinopsis = $request->input('synopsis');
+            $movie->trailer = $request->input('trailer');
+            $movie->category_id = $request->input('categoria');
+
             //Guardem la pelicula
             $movie->save();
             //Retornem el missatge de que hem creat la pelicula correctament
@@ -37,13 +40,13 @@ class APICatallogController extends Controller
             //Retornem el missatge de que falta algun camp
             return response()->json( ['msg' => 'Falta algun camp de la bases de dades' ]);
         }
-            
+
         //---------------------------------------------------//
         //De la seguent manera és més optim, però fa el mateix que lo anterior,
         //i hem de tenir en compte que no podem comprovar els camps:
-        //$movie = Movie::create($request->all());  
+        //$movie = Movie::create($request->all());
         //---------------------------------------------------//
-        
+
     }
 
     //Funcio per retornar per Json només una pelicula
@@ -52,7 +55,7 @@ class APICatallogController extends Controller
         $m = Movie::findOrFail( $id );
         return response()->json($m);
     }
-    
+
     //Metode per modificar una pelicula
     public function update(Request $request, $id)
     {
@@ -83,11 +86,11 @@ class APICatallogController extends Controller
         {
             $m->rented = true;
             $m->save();
-            return response()->json( ['msg' => 'La película se ha marcado como alquilada' ] );  
+            return response()->json( ['msg' => 'La película se ha marcado como alquilada' ] );
         }
-        
+
     }
-    
+
     //Métode per retornar una pelicula
     public function putReturn($id) {
         $m = Movie::findOrFail( $id );
@@ -101,7 +104,7 @@ class APICatallogController extends Controller
             $m->save();
             return response()->json( ['msg' => 'La película se ha marcado como devuelta' ] );
         }
-        
+
     }
 
 }

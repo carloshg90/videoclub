@@ -107,7 +107,7 @@
     <form action="{{action('CatalogController@crearComentari', $arrayPeliculas->id)}}" method="POST">
         @csrf
         <p>Enviar comentari:</p>
-        <input class="col-12" type="text" name="titol" placeholder="Resum del teu comentari">
+        <input  class="col-12" type="text" name="titol" placeholder="Resum del teu comentari">
         <p style="margin-top: 1em">Valoració:</p>
         <select class="col-12" name="estrelles">
             <option value="1" selected>1 estrella</option>
@@ -116,7 +116,7 @@
             <option value="4">4 estrelles</option>
             <option value="5">5 estrelles</option>
         </select>
-        <textarea style="margin-top: 1em" class="col-12" name="comentari" rows="10" cols="20" placeholder="Deixa la teva opinió"></textarea>
+        <textarea  style="margin-top: 1em" class="col-12" name="comentari" rows="10" cols="20" placeholder="Deixa la teva opinió"></textarea>
         <button type="submit" class="btn btn-success">Enviar</button>
         <button type="reset" class="btn btn-dark">Cancel·lar</button>
     </form>

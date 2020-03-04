@@ -15,13 +15,13 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->string('year',8);
-            $table->string('director',64);
-            $table->string('poster');
-            $table->boolean('rented')->default(false);
-            $table->text('sinopsis');
-            $table->string('trailer');
+            $table->string('title')->nullable();
+            $table->string('year',8)->nullable();
+            $table->string('director',64)->nullable();
+            $table->string('poster')->nullable();
+            $table->boolean('rented')->default(false)->nullable();
+            $table->text('sinopsis')->nullable();
+            $table->string('trailer')->nullable();
             $table->integer('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

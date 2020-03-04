@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('v1/catalog','APICatallogController@index'); //Funciona
 Route::get ('v1/catalog/{id}','APICatallogController@show'); //Funciona
-Route::post ('v1/catalog','APICatallogController@store')->middleware('auth.basic.once'); //Funciona
+Route::post ('v1/catalog','APICatallogController@store')->middleware('auth.basic.once')->name("api.store"); //Funciona
 Route::put ('v1/catalog/{id}','APICatallogController@update')->middleware('auth.basic.once');//Funciona
 Route::delete ('v1/catalog/{id}','APICatallogController@destroy')->middleware('auth.basic.once'); //Funciona
 Route::put ('v1/catalog/{id}/rent','APICatallogController@putRent')->middleware('auth.basic.once'); //Funciona

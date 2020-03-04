@@ -70,12 +70,12 @@ Route::get('/catalog/edit/{peli}', function ($peli) {   //Ruta que posarem al na
 
 //Route::get('/', 'HomeController@getHome');
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('catalog', 'CatalogController@getIndex')->middleware('auth');
-Route::get('catalog/show/{id}', 'CatalogController@getShow')->middleware('auth');
-Route::get('catalog/create', 'CatalogController@getCreate')->middleware('auth');
-Route::get('catalog/edit/{id}', 'CatalogController@getEdit')->middleware('auth');
-Route::post('catalog/create', 'CatalogController@postCreate')->middleware('auth');
-Route::put('catalog/edit/{id}', 'CatalogController@putEdit')->middleware('auth');
+Route::get('/catalog', 'CatalogController@getIndex')->middleware('auth');
+Route::get('/catalog/show/{id}', 'CatalogController@getShow')->middleware('auth');
+Route::get('/catalog/create', 'CatalogController@getCreate')->middleware('auth');
+Route::get('/catalog/edit/{id}', 'CatalogController@getEdit')->middleware('auth');
+Route::post('/catalog/create', 'CatalogController@postCreate')->middleware('auth');
+Route::put('/catalog/edit/{id}', 'CatalogController@putEdit')->middleware('auth');
 Route::put('/catalog/rent/{id}','CatalogController@putRent')->middleware('auth');
 Route::put('/catalog/return/{id}','CatalogController@putReturn')->middleware('auth');
 Route::delete('/catalog/delete/{id}','CatalogController@deleteMovie')->middleware('auth');
@@ -83,5 +83,3 @@ Route::post('/catalog/coment/{id}','CatalogController@crearComentari')->middlewa
 Route::resource('/category','CategoryController')->middleware('auth');
 Route::get('/catalog','CatalogController@buscar')->middleware('auth');
 Auth::routes();
-
-
